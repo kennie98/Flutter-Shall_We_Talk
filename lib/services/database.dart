@@ -20,6 +20,13 @@ class DatabaseService {
     });
   }
 
+  Future<void> updateUserLocation(double lat, double long) async {
+    return await userInfoCollection.document(uid).setData({
+      'latitude': lat,
+      'longitude': long,
+    });
+  }
+
   // brew list from snapshot
   List<UserInfo> _userInfoListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
@@ -30,6 +37,8 @@ class DatabaseService {
         age: doc.data['age'] ?? '0',
         selfIntro: doc.data['selfIntro'] ?? '',
         pro: doc.data['pro'] ?? false,
+        latitude: doc.data['latitude'] ?? 0.0,
+        longitude: doc.data['longitude'] ?? 0.0,
       );
     }).toList();
   }
@@ -43,6 +52,8 @@ class DatabaseService {
       age: snapshot.data['age'],
       selfIntro: snapshot.data['selfIntro'],
       pro: snapshot.data['pro'],
+      latitude: snapshot.data['latitude'] ?? 0.0,
+      longitude: snapshot.data['longitude'] ?? 0.0,
     );
   }
 

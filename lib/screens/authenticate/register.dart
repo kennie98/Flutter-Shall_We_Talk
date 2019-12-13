@@ -72,11 +72,7 @@ class _RegisterState extends State<Register> {
                               children: <Widget>[
                                 global_style.styledRaisedButton(
                                   'Login',
-                                  () {
-                                    Navigator.pop(
-                                      context,
-                                    );
-                                  },
+                                  () => widget.toggleView(),
                                 ),
                               ],
                             ),

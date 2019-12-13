@@ -64,14 +64,7 @@ class _SignInState extends State<SignIn> {
                             children: <Widget>[
                               global_style.styledRaisedButton(
                                 'New Account',
-                                () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => new Register(),
-                                    ),
-                                  );
-                                },
+                                () => widget.toggleView(),
                               )
                             ],
                           ),
@@ -185,8 +178,8 @@ class _State extends State<LoginBlock> {
   }
 
   String _validatePassword(String value) {
-    if (value.length < 4)
-      return 'Length cannot be less than 4';
+    if (value.length < 6)
+      return 'Length cannot be less than 6';
     else
       return null;
   }
