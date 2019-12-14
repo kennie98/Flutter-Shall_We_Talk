@@ -1,6 +1,7 @@
 library shall_we_talk.global_style;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 final String emailDomain = '@kts.com';
 
@@ -21,9 +22,16 @@ final TextStyle ts = TextStyle(
   fontWeight: FontWeight.w100,
 );
 
+void setPortrait() {
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+}
+
 Widget styledRaisedButton(String text, Function func) {
   return RaisedButton(
-    color: Colors.teal,//(color3),
+    color: Colors.teal, //(color3),
     shape: RoundedRectangleBorder(
       borderRadius: new BorderRadius.circular(18.0),
       side: BorderSide(

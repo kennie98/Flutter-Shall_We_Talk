@@ -16,6 +16,7 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
+    global_style.setPortrait();
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     return _loading
         ? Loading()

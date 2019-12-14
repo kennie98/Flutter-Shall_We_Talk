@@ -16,6 +16,8 @@ class UserInfoPageState extends State<UserInfoPage> {
   @override
   Widget build(BuildContext context) {
 
+    global_style.setPortrait();
+
     return MaterialApp(
       title: 'Shall We Talk - UserInfo',
       theme: ThemeData(

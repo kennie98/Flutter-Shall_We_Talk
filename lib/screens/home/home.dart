@@ -8,6 +8,7 @@ import 'package:shall_we_talk/shared/loading.dart';
 import 'package:shall_we_talk/shared/global_style.dart' as global_style;
 import 'package:provider/provider.dart';
 import 'package:shall_we_talk/services/location.dart';
+import 'package:flutter/services.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -33,6 +34,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     User user = Provider.of<User>(context);
+    global_style.setPortrait();
 
     return StreamBuilder<UserInfo>(
         stream: DatabaseService(uid: user.uid).userInfoOfUid,

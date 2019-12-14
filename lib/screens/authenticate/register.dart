@@ -25,6 +25,8 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     final bottom = MediaQuery.of(context).viewInsets.bottom;
 
+    global_style.setPortrait();
+
     return _loading
         ? Loading()
         : Scaffold(
