@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shall_we_talk/models/user_info.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:shall_we_talk/shared/global_style.dart' as global_style;
 
 class UserInfoPage extends StatefulWidget {
@@ -15,7 +14,6 @@ class UserInfoPage extends StatefulWidget {
 class UserInfoPageState extends State<UserInfoPage> {
   @override
   Widget build(BuildContext context) {
-
     global_style.setPortrait();
 
     return MaterialApp(
@@ -134,7 +132,8 @@ class MyMapState extends State<MyMap> {
       markerId: MarkerId("curr_loc"),
       position: LatLng(userInfo.latitude, userInfo.longitude),
       infoWindow: InfoWindow(
-          title: '${userInfo.name}\n-${userInfo.gender}\n-${userInfo.age}'),
+          title: '${userInfo.name}',
+          snippet: '${userInfo.gender}, Age: ${userInfo.age}'),
     );
     _markers["User Location"] = marker;
   }

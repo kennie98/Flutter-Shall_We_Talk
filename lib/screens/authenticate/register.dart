@@ -144,6 +144,7 @@ class _State extends State<SignUpBlock> {
   }
 
   Widget FormUI() {
+    final focus = FocusNode();
     return new Column(
       children: <Widget>[
         Row(
@@ -151,12 +152,14 @@ class _State extends State<SignUpBlock> {
             Expanded(
               child: new TextFormField(
                 style: global_style.ts,
+                focusNode: focus,
                 decoration: const InputDecoration(
                   labelText: 'Username',
                   helperText: '',
                 ),
                 keyboardType: TextInputType.text,
                 validator: _validateUsername,
+                onEditingComplete: focus.unfocus,
                 onSaved: (String val) {
                   _username = val;
                 },
@@ -173,6 +176,7 @@ class _State extends State<SignUpBlock> {
                 keyboardType: TextInputType.visiblePassword,
                 validator: _validatePassword,
                 obscureText: true,
+                onEditingComplete: focus.unfocus,
                 onSaved: (String val) {
                   _password = val;
                 },
@@ -191,6 +195,7 @@ class _State extends State<SignUpBlock> {
                 ),
                 keyboardType: TextInputType.text,
                 validator: _validateName,
+                onEditingComplete: focus.unfocus,
                 onSaved: (String val) {
                   _name = val;
                 },
@@ -243,6 +248,7 @@ class _State extends State<SignUpBlock> {
                 ),
                 keyboardType: TextInputType.number,
                 validator: _validateAge,
+                onEditingComplete: focus.unfocus,
                 onSaved: (String val) {
                   _age = val;
                 },
@@ -260,6 +266,7 @@ class _State extends State<SignUpBlock> {
                 ),
                 keyboardType: TextInputType.number,
                 validator: _validatePhoneNumber,
+                onEditingComplete: focus.unfocus,
                 onSaved: (String val) {
                   _phoneno = val;
                 },
