@@ -23,7 +23,7 @@ class DatabaseService {
   }
 
   Future<void> updateUserLocation(double lat, double long) async {
-    return await userInfoCollection.document(uid).setData({
+    return await userInfoCollection.document(uid).updateData({
       'latitude': lat,
       'longitude': long,
     });

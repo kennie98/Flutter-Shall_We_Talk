@@ -18,8 +18,6 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
   String error = '';
-
-  // text field state
   String email = '';
   String password = '';
 
@@ -377,16 +375,12 @@ class _State extends State<SignUpBlock> {
             _pos.longitude);
 
         if (result == null) {
-          setState(() {
-            _loading = false;
-            global_style.showMessageDialog(
-                context, 'User account already exists');
-          });
-        } else {
-          setState(() {
-            _loading = false;
-          });
+          global_style.showMessageDialog(
+              context, 'User account already exists');
         }
+        setState(() {
+          _loading = false;
+        });
       } else {
         setState(() {
           _autoValidate = true;

@@ -1,13 +1,13 @@
 import 'package:shall_we_talk/models/user.dart';
 import 'package:shall_we_talk/models/user_info.dart';
 import 'package:shall_we_talk/screens/home/user_info_list.dart';
-import 'package:shall_we_talk/screens/home/user_map.dart';
 import 'package:shall_we_talk/services/auth.dart';
 import 'package:shall_we_talk/services/database.dart';
 import 'package:shall_we_talk/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:shall_we_talk/shared/global_style.dart' as global_style;
 import 'package:provider/provider.dart';
+import 'package:shall_we_talk/services/location.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -91,15 +91,18 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     ),
                     actions: <Widget>[
                       FlatButton.icon(
-                        icon: Icon(Icons.location_on),
+                        icon: Icon(Icons.location_searching),
                         label: Text(''),
-                        onPressed: () {
-                          Navigator.push(
+                        onPressed: () async {
+                          final LocationService _loc =
+                              LocationService(uid: user.uid);
+                          await _loc.updateCurrentLocation();
+                          /*Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => new UserInfoPage(),
                             ),
-                          );
+                          );*/
                         },
                       ),
                       FlatButton.icon(

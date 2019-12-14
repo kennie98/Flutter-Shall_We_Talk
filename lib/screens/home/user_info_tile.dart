@@ -1,8 +1,11 @@
 import 'package:shall_we_talk/models/user_info.dart';
 import 'package:flutter/material.dart';
+import 'Package:shall_we_talk/screens/home/user_map.dart';
 
 class UserInfoTile extends StatelessWidget {
   final UserInfo userInfo;
+  final GlobalKey<UserInfoPageState> _key = GlobalKey();
+
   UserInfoTile({this.userInfo});
 
   @override
@@ -22,7 +25,23 @@ class UserInfoTile extends StatelessWidget {
             ),
           ),
           title: Text(userInfo.name),
-          //subtitle: Text(userInfo.pro?'Professional':'Normal User'),
+          subtitle: Text(userInfo.pro ? userInfo.selfIntro : ''),
+          trailing: ((userInfo.pro)
+              ? IconButton(icon: Icon(Icons.textsms), onPressed: () {})
+              : IconButton(
+                  icon: Icon(Icons.info_outline),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserInfoPage(
+                          key: _key,
+                          userInfo: userInfo,
+                        ),
+                      ),
+                    );
+                  },
+                )),
         ),
       ),
     );
