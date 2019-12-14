@@ -1,6 +1,7 @@
 import 'package:shall_we_talk/models/user_info.dart';
 import 'package:flutter/material.dart';
 import 'Package:shall_we_talk/screens/home/user_map.dart';
+import 'Package:shall_we_talk/services/call_sms_email.dart';
 
 class UserInfoTile extends StatelessWidget {
   final UserInfo userInfo;
@@ -27,7 +28,11 @@ class UserInfoTile extends StatelessWidget {
           title: Text(userInfo.name),
           subtitle: Text(userInfo.pro ? userInfo.selfIntro : ''),
           trailing: ((userInfo.pro)
-              ? IconButton(icon: Icon(Icons.textsms), onPressed: () {})
+              ? IconButton(
+                  icon: Icon(Icons.phone),
+                  onPressed: () {
+                    new CallsAndMessagesService().call('${userInfo.phoneno}');
+                  })
               : IconButton(
                   icon: Icon(Icons.info_outline),
                   onPressed: () {

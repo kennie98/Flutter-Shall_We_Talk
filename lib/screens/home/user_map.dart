@@ -15,10 +15,9 @@ class UserInfoPage extends StatefulWidget {
 class UserInfoPageState extends State<UserInfoPage> {
   @override
   Widget build(BuildContext context) {
-    print(widget.userInfo.latitude);
 
     return MaterialApp(
-      title: 'Shall We Talk - Home',
+      title: 'Shall We Talk - UserInfo',
       theme: ThemeData(
         primarySwatch: Colors.amber,
         fontFamily: "Calibri",

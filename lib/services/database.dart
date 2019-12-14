@@ -9,12 +9,13 @@ class DatabaseService {
   final CollectionReference userInfoCollection =
       Firestore.instance.collection('userInfo');
 
-  Future<void> updateUserData(String name, String gender, int age,
+  Future<void> updateUserData(String name, String gender, int age, String phone,
       String selfIntro, bool pro, double lat, double long) async {
     return await userInfoCollection.document(uid).setData({
       'name': name,
       'gender': gender,
       'age': age,
+      'phoneno': phone,
       'self_intro': selfIntro,
       'pro': pro,
       'latitude': lat,
@@ -37,6 +38,7 @@ class DatabaseService {
         name: doc.data['name'] ?? '',
         gender: doc.data['gender'] ?? '',
         age: doc.data['age'] ?? '0',
+        phoneno: doc.data['phoneno'] ?? '0',
         selfIntro: doc.data['selfIntro'] ?? '',
         pro: doc.data['pro'] ?? false,
         latitude: doc.data['latitude'] ?? 0.0,
@@ -52,6 +54,7 @@ class DatabaseService {
       name: snapshot.data['name'],
       gender: snapshot.data['gender'],
       age: snapshot.data['age'],
+      phoneno: snapshot.data['phoneno'],
       selfIntro: snapshot.data['selfIntro'],
       pro: snapshot.data['pro'],
       latitude: snapshot.data['latitude'] ?? 0.0,

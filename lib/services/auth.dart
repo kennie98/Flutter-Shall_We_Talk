@@ -47,6 +47,7 @@ class AuthService {
     String name,
     String gender,
     int age,
+    String phoneno,
     String selfIntro,
     bool pro,double latitude, double longitude
   ) async {
@@ -59,6 +60,7 @@ class AuthService {
         name,
         gender,
         age,
+        phoneno,
         selfIntro,
         pro,
         latitude,

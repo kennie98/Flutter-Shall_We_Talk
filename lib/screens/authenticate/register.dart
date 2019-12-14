@@ -101,11 +101,11 @@ class _State extends State<SignUpBlock> {
   bool _autoValidate = false;
   String _username;
   String _name;
-  String _password1;
-  String _password2;
+  String _password;
   String _age;
   int _professional = -1;
   String _selectedGender;
+  String _phoneno;
 
   @override
   Widget build(BuildContext context) {
@@ -165,6 +165,25 @@ class _State extends State<SignUpBlock> {
               child: new TextFormField(
                 style: global_style.ts,
                 decoration: const InputDecoration(
+                  labelText: 'Password',
+                  helperText: '',
+                ),
+                keyboardType: TextInputType.visiblePassword,
+                validator: _validatePassword,
+                obscureText: true,
+                onSaved: (String val) {
+                  _password = val;
+                },
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: new TextFormField(
+                style: global_style.ts,
+                decoration: const InputDecoration(
                   labelText: 'Name',
                   helperText: '',
                 ),
@@ -175,45 +194,7 @@ class _State extends State<SignUpBlock> {
                 },
               ),
             ),
-          ],
-        ),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: new TextFormField(
-                style: global_style.ts,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                  helperText: '',
-                ),
-                keyboardType: TextInputType.visiblePassword,
-                validator: _validatePassword,
-                obscureText: true,
-                onSaved: (String val) {
-                  _password1 = val;
-                },
-              ),
-            ),
             SizedBox(width: 10),
-            Expanded(
-              child: new TextFormField(
-                style: global_style.ts,
-                decoration: const InputDecoration(
-                  labelText: 'Repeat Password',
-                  helperText: '',
-                ),
-                keyboardType: TextInputType.visiblePassword,
-                validator: _validatePassword,
-                obscureText: true,
-                onSaved: (String val) {
-                  _password2 = val;
-                },
-              ),
-            ),
-          ],
-        ),
-        Row(
-          children: <Widget>[
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -247,9 +228,10 @@ class _State extends State<SignUpBlock> {
                 ],
               ),
             ),
-            new SizedBox(
-              width: 10.0,
-            ),
+          ],
+        ),
+        Row(
+          children: <Widget>[
             Expanded(
               child: new TextFormField(
                 style: global_style.ts,
@@ -261,6 +243,23 @@ class _State extends State<SignUpBlock> {
                 validator: _validateAge,
                 onSaved: (String val) {
                   _age = val;
+                },
+              ),
+            ),
+            new SizedBox(
+              width: 10.0,
+            ),
+            Expanded(
+              child: new TextFormField(
+                style: global_style.ts,
+                decoration: const InputDecoration(
+                  labelText: 'Contact Number',
+                  helperText: '',
+                ),
+                keyboardType: TextInputType.number,
+                validator: _validatePhoneNumber,
+                onSaved: (String val) {
+                  _phoneno = val;
                 },
               ),
             ),
@@ -350,43 +349,47 @@ class _State extends State<SignUpBlock> {
       return null;
   }
 
+  String _validatePhoneNumber(String value) {
+    String patttern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+    RegExp regExp = new RegExp(patttern);
+    if (value.length == 0) {
+      return 'Enter phone number';
+    } else if (!regExp.hasMatch(value)) {
+      return 'Invalid phone number';
+    }
+    return null;
+  }
+
   void _validateInputs() async {
     if (_formKey.currentState.validate()) {
       Position _pos;
-      if (_password1 == _password2) {
-        _formKey.currentState.save();
+      _formKey.currentState.save();
 
-        setState(() {
-          _loading = true;
-          _autoValidate = true;
-        });
+      setState(() {
+        _loading = true;
+        _autoValidate = true;
+      });
 
-        _pos = await _loc.getCurrentLocation();
+      _pos = await _loc.getCurrentLocation();
 
-        dynamic result = await _auth.registerWithEmailAndPassword(
-            _username + '${global_style.emailDomain}',
-            _password1,
-            _name,
-            _selectedGender,
-            int.parse(_age),
-            selfIntroController.text,
-            _professional == 0,
-            _pos.latitude,
-            _pos.longitude);
+      dynamic result = await _auth.registerWithEmailAndPassword(
+          _username + '${global_style.emailDomain}',
+          _password,
+          _name,
+          _selectedGender,
+          int.parse(_age),
+          _phoneno,
+          selfIntroController.text,
+          _professional == 0,
+          _pos.latitude,
+          _pos.longitude);
 
-        if (result == null) {
-          global_style.showMessageDialog(
-              context, 'User account already exists');
-        }
-        setState(() {
-          _loading = false;
-        });
-      } else {
-        setState(() {
-          _autoValidate = true;
-          global_style.showMessageDialog(context, 'Passwords are different');
-        });
+      if (result == null) {
+        global_style.showMessageDialog(context, 'User account already exists');
       }
+      setState(() {
+        _loading = false;
+      });
     }
   }
 }
