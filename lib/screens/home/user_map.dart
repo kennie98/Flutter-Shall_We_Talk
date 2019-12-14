@@ -13,9 +13,10 @@ class UserInfoPage extends StatefulWidget {
 }
 
 class UserInfoPageState extends State<UserInfoPage> {
-
   @override
   Widget build(BuildContext context) {
+    print(widget.userInfo.latitude);
+
     return MaterialApp(
       title: 'Shall We Talk - Home',
       theme: ThemeData(
@@ -27,6 +28,7 @@ class UserInfoPageState extends State<UserInfoPage> {
         backgroundColor: Color(global_style.color6),
         appBar: new AppBar(
           title: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Material(
                 elevation: 6.0,
@@ -45,12 +47,14 @@ class UserInfoPageState extends State<UserInfoPage> {
               ),
               SizedBox(width: 10),
               Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
+                  SizedBox(height: 10),
                   Text(
                     '${widget.userInfo.name}',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
@@ -60,26 +64,48 @@ class UserInfoPageState extends State<UserInfoPage> {
                     ),
                   ),
                 ],
-              )
+              ),
+              SizedBox(width: 10),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(height: 10),
+                  Text(
+                    '${widget.userInfo.gender}',
+                    style: TextStyle(
+                      fontSize: 15,
+                    ),
+                  ),
+                  Text(
+                    '${widget.userInfo.age}',
+                    style: TextStyle(
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
           actions: <Widget>[
             FlatButton.icon(
               icon: Icon(Icons.person),
               label: Text('Back'),
-              onPressed: () async {
-                //await _auth.signOut();
+              onPressed: () {
+                Navigator.pop(context);
               },
             ),
           ],
         ),
-        body: MyMap(),
+        body: MyMap(widget.userInfo),
       ),
     );
   }
 }
 
 class MyMap extends StatefulWidget {
+  final UserInfo userInfo;
+  MyMap(this.userInfo);
+
   @override
   State<MyMap> createState() => MyMapState();
 }
@@ -89,35 +115,26 @@ class MyMapState extends State<MyMap> {
 
   @override
   Widget build(BuildContext context) {
+    _showUserLocation(widget.userInfo);
+
     return GoogleMap(
-        mapType: MapType.normal, //hybrid,
-        initialCameraPosition: CameraPosition(
-          target: LatLng(43.4526732, -79.6840743),
-          zoom: 15,
-        ),
-        markers: _markers.values.toSet(),
-      );
-     /*
-      floatingActionButton: FloatingActionButton(
-        onPressed: _getLocation,
-        tooltip: 'Get Location',
-        child: Icon(Icons.flag),
+      mapType: MapType.normal, //hybrid,
+      initialCameraPosition: CameraPosition(
+        target: LatLng(widget.userInfo.latitude, widget.userInfo.longitude),
+        zoom: 15,
       ),
-    );*/
+      markers: _markers.values.toSet(),
+    );
   }
 
-  void _getLocation() async {
-    var currentLocation = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
-
-    setState(() {
-      _markers.clear();
-      final marker = Marker(
-        markerId: MarkerId("curr_loc"),
-        position: LatLng(currentLocation.latitude, currentLocation.longitude),
-        infoWindow: InfoWindow(title: 'Your Location'),
-      );
-      _markers["Current Location"] = marker;
-    });
+  void _showUserLocation(UserInfo userInfo) {
+    _markers.clear();
+    final marker = Marker(
+      markerId: MarkerId("curr_loc"),
+      position: LatLng(userInfo.latitude, userInfo.longitude),
+      infoWindow: InfoWindow(
+          title: '${userInfo.name}\n-${userInfo.gender}\n-${userInfo.age}'),
+    );
+    _markers["User Location"] = marker;
   }
 }

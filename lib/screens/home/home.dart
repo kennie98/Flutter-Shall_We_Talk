@@ -51,80 +51,113 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 ),
                 home: Scaffold(
                   backgroundColor: Color(global_style.color6),
-                  appBar: new AppBar(
-                    title: Row(
-                      children: <Widget>[
-                        Material(
-                          elevation: 6.0,
-                          shape: CircleBorder(),
-                          clipBehavior: Clip.antiAlias,
-                          color: Colors.transparent,
-                          child: CircleAvatar(
-                            radius: 20.0,
-                            backgroundColor: Colors.amberAccent,
-                            backgroundImage: AssetImage(
-                              userInfo.gender == 'Male'
-                                  ? 'images/male_avata.png'
-                                  : 'images/female_avata.png',
+                  appBar: PreferredSize(
+                    preferredSize: Size.fromHeight(130.0),
+                    child: new AppBar(
+                      title: Row(
+                        children: <Widget>[
+                          Material(
+                            elevation: 6.0,
+                            shape: CircleBorder(),
+                            clipBehavior: Clip.antiAlias,
+                            color: Colors.transparent,
+                            child: CircleAvatar(
+                              radius: 20.0,
+                              backgroundColor: Colors.amberAccent,
+                              backgroundImage: AssetImage(
+                                userInfo.gender == 'Male'
+                                    ? 'images/male_avata.png'
+                                    : 'images/female_avata.png',
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(width: 10),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              '${userInfo.name}',
-                              style: TextStyle(
-                                fontSize: 20,
+                          SizedBox(width: 10),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(height: 10),
+                              Text(
+                                '${userInfo.name}',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            Text(
-                              '${userInfo.pro ? 'Professional' : 'Normal User'}',
-                              style: TextStyle(
-                                fontSize: 15,
+                              Text(
+                                '${userInfo.pro ? 'Professional' : 'Normal User'}',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                ),
                               ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                    actions: <Widget>[
-                      FlatButton.icon(
-                        icon: Icon(Icons.location_searching),
-                        label: Text(''),
-                        onPressed: () async {
-                          final LocationService _loc =
-                              LocationService(uid: user.uid);
-                          await _loc.updateCurrentLocation();
-                          /*Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => new UserInfoPage(),
-                            ),
-                          );*/
-                        },
+                            ],
+                          )
+                        ],
                       ),
-                      FlatButton.icon(
-                        icon: Icon(Icons.person),
-                        label: Text('Logout'),
-                        onPressed: () async {
-                          await _auth.signOut();
-                        },
-                      ),
-                    ],
-                    bottom: new TabBar(
-                      tabs: <Tab>[
-                        new Tab(
-                          text: "Normal Users",
-                          icon: new Icon(Icons.account_circle),
+                      actions: <Widget>[
+                        RaisedButton(
+                          color: Colors.amber,
+                          padding: EdgeInsets.all(2.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: Icon(
+                                  Icons.location_searching,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: Text(
+                                  "Update Location",
+                                ),
+                              ),
+                            ],
+                          ),
+                          onPressed: () async {
+                            final LocationService _loc =
+                                LocationService(uid: user.uid);
+                            await _loc.updateCurrentLocation();
+                          },
                         ),
-                        new Tab(
-                          text: "Professionals",
-                          icon: new Icon(Icons.account_circle),
+                        RaisedButton(
+                          color: Colors.amber,
+                          padding: EdgeInsets.all(2.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: Icon(
+                                  Icons.person,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: Text(
+                                  "Logout",
+                                ),
+                              ),
+                            ],
+                          ),
+                          onPressed: () async {
+                            await _auth.signOut();
+                          },
                         ),
                       ],
-                      controller: _tabController,
+                      bottom: new TabBar(
+                        tabs: <Tab>[
+                          new Tab(
+                            text: "Normal Users",
+                            icon: new Icon(Icons.account_circle),
+                          ),
+                          new Tab(
+                            text: "Professionals",
+                            icon: new Icon(Icons.account_circle),
+                          ),
+                        ],
+                        controller: _tabController,
+                      ),
                     ),
                   ),
                   body: TabBarView(
