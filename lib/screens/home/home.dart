@@ -69,9 +69,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             ),
                           ),
                         ),
-                        SizedBox(width: 30),
+                        SizedBox(width: 10),
                         Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
                               '${userInfo.name}',
@@ -92,7 +92,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     actions: <Widget>[
                       FlatButton.icon(
                         icon: Icon(Icons.location_on),
-                        label: Text('Location'),
+                        label: Text(''),
                         onPressed: () {
                           Navigator.push(
                             context,

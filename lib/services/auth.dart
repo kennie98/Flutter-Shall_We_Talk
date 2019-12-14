@@ -12,9 +12,7 @@ class AuthService {
 
   // auth change user stream
   Stream<User> get user {
-    return _auth.onAuthStateChanged
-        //.map((FirebaseUser user) => _userFromFirebaseUser(user));
-        .map(_userFromFirebaseUser);
+    return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
   }
 
   // sign in anon
@@ -50,7 +48,7 @@ class AuthService {
     String gender,
     int age,
     String selfIntro,
-    bool pro,
+    bool pro,double latitude, double longitude
   ) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
@@ -63,6 +61,8 @@ class AuthService {
         age,
         selfIntro,
         pro,
+        latitude,
+        longitude
       );
       return _userFromFirebaseUser(user);
     } catch (error) {

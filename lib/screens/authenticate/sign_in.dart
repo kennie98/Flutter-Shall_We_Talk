@@ -1,6 +1,5 @@
 import 'package:shall_we_talk/services/auth.dart';
 import 'package:shall_we_talk/shared/loading.dart';
-import 'package:shall_we_talk/screens/authenticate/register.dart';
 import 'package:shall_we_talk/shared/global_style.dart' as global_style;
 import 'package:flutter/material.dart';
 
@@ -87,6 +86,7 @@ class LoginBlock extends StatefulWidget {
 class _State extends State<LoginBlock> {
   final _formKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService();
+
   bool _autoValidate = false;
   String _username;
   String _password;

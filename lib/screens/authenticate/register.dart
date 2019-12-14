@@ -2,6 +2,8 @@ import 'package:shall_we_talk/services/auth.dart';
 import 'package:shall_we_talk/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:shall_we_talk/shared/global_style.dart' as global_style;
+import 'package:shall_we_talk/services/location.dart';
+import 'package:geolocator/geolocator.dart';
 
 bool _loading = false;
 
@@ -95,6 +97,7 @@ class SignUpBlock extends StatefulWidget {
 
 class _State extends State<SignUpBlock> {
   final AuthService _auth = AuthService();
+  final LocationService _loc = LocationService();
   final _formKey = GlobalKey<FormState>();
   TextEditingController selfIntroController = new TextEditingController();
   bool _autoValidate = false;
@@ -351,6 +354,7 @@ class _State extends State<SignUpBlock> {
 
   void _validateInputs() async {
     if (_formKey.currentState.validate()) {
+      Position _pos;
       if (_password1 == _password2) {
         _formKey.currentState.save();
 
@@ -358,15 +362,19 @@ class _State extends State<SignUpBlock> {
           _loading = true;
           _autoValidate = true;
         });
+
+        _pos = await _loc.getCurrentLocation();
+
         dynamic result = await _auth.registerWithEmailAndPassword(
-          _username + '${global_style.emailDomain}',
-          _password1,
-          _name,
-          _selectedGender,
-          int.parse(_age),
-          selfIntroController.text,
-          _professional == 0,
-        );
+            _username + '${global_style.emailDomain}',
+            _password1,
+            _name,
+            _selectedGender,
+            int.parse(_age),
+            selfIntroController.text,
+            _professional == 0,
+            _pos.latitude,
+            _pos.longitude);
 
         if (result == null) {
           setState(() {

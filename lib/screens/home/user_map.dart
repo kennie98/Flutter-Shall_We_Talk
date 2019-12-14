@@ -56,7 +56,6 @@ class MyMapSampleState extends State<MyMap> {
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
 
     setState(() {
-      print('latitude:${currentLocation.latitude}, longtitude:${currentLocation.longitude}');
       _markers.clear();
       final marker = Marker(
         markerId: MarkerId("curr_loc"),
