@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shall_we_talk/models/user_info.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:shall_we_talk/shared/global_style.dart' as global_style;
+import 'package:shall_we_talk/shared/globals.dart' as globals;
 
 class UserInfoPage extends StatefulWidget {
   final UserInfo userInfo;
@@ -14,7 +14,7 @@ class UserInfoPage extends StatefulWidget {
 class UserInfoPageState extends State<UserInfoPage> {
   @override
   Widget build(BuildContext context) {
-    global_style.setPortrait();
+    globals.setPortrait();
 
     return MaterialApp(
       title: 'Shall We Talk - UserInfo',
@@ -24,7 +24,7 @@ class UserInfoPageState extends State<UserInfoPage> {
         canvasColor: Colors.amberAccent,
       ),
       home: Scaffold(
-        backgroundColor: Color(global_style.color6),
+        backgroundColor: Color(globals.color6),
         appBar: new AppBar(
           title: Row(
             crossAxisAlignment: CrossAxisAlignment.center,

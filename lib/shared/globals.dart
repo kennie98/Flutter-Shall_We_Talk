@@ -1,4 +1,4 @@
-library shall_we_talk.global_style;
+library shall_we_talk.globals;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

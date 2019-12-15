@@ -1,6 +1,6 @@
 import 'package:shall_we_talk/services/auth.dart';
 import 'package:shall_we_talk/shared/loading.dart';
-import 'package:shall_we_talk/shared/global_style.dart' as global_style;
+import 'package:shall_we_talk/shared/globals.dart' as globals;
 import 'package:flutter/material.dart';
 
 bool _loading = false;
@@ -16,12 +16,12 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
-    global_style.setPortrait();
+    globals.setPortrait();
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     return _loading
         ? Loading()
         : Scaffold(
-            backgroundColor: Color(global_style.color6),
+            backgroundColor: Color(globals.color6),
             resizeToAvoidBottomInset: false,
             resizeToAvoidBottomPadding: false,
             body: SingleChildScrollView(
@@ -62,7 +62,7 @@ class _SignInState extends State<SignIn> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: <Widget>[
-                              global_style.styledRaisedButton(
+                              globals.styledRaisedButton(
                                 'New Account',
                                 () => widget.toggleView(),
                               )
@@ -98,7 +98,7 @@ class _State extends State<LoginBlock> {
       padding: EdgeInsets.fromLTRB(50, 20, 50, 0),
       child: Container(
         decoration: new BoxDecoration(
-          color: Colors.amber, //(global_style.color5),
+          color: Colors.amber, //(globals.color5),
           borderRadius: new BorderRadius.only(
             topLeft: Radius.circular(20.0),
             topRight: Radius.circular(20.0),
@@ -129,7 +129,7 @@ class _State extends State<LoginBlock> {
     return new Column(
       children: <Widget>[
         new TextFormField(
-          style: global_style.ts,
+          style: globals.ts,
           decoration: const InputDecoration(
             labelText: 'Username',
             helperText: '',
@@ -145,7 +145,7 @@ class _State extends State<LoginBlock> {
           height: 10.0,
         ),
         new TextFormField(
-          style: global_style.ts,
+          style: globals.ts,
           decoration: const InputDecoration(
             labelText: 'Password',
             helperText: '',
@@ -161,7 +161,7 @@ class _State extends State<LoginBlock> {
         new SizedBox(
           height: 30.0,
         ),
-        global_style.styledRaisedButton('Login', _validateInputs),
+        globals.styledRaisedButton('Login', _validateInputs),
       ],
     );
   }
@@ -192,9 +192,9 @@ class _State extends State<LoginBlock> {
         _loading = true;
       });
       dynamic result = await _auth.signInWithEmailAndPassword(
-          _username + '${global_style.emailDomain}', _password);
+          _username + '${globals.emailDomain}', _password);
       if (result == null) {
-        global_style.showMessageDialog(context, 'Wrong credentials');
+        globals.showMessageDialog(context, 'Wrong credentials');
       }
       setState(() {
         _loading = false;

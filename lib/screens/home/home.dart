@@ -5,7 +5,7 @@ import 'package:shall_we_talk/screens/home/user_info_list.dart';
 import 'package:shall_we_talk/services/auth.dart';
 import 'package:shall_we_talk/services/database.dart';
 import 'package:shall_we_talk/shared/loading.dart';
-import 'package:shall_we_talk/shared/global_style.dart' as global_style;
+import 'package:shall_we_talk/shared/globals.dart' as globals;
 import 'package:provider/provider.dart';
 import 'package:shall_we_talk/services/location.dart';
 import 'package:flutter/services.dart';
@@ -34,7 +34,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     User user = Provider.of<User>(context);
-    global_style.setPortrait();
+    globals.setPortrait();
 
     return StreamBuilder<UserInfo>(
         stream: DatabaseService(uid: user.uid).userInfoOfUid,
@@ -52,7 +52,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   canvasColor: Colors.amberAccent,
                 ),
                 home: Scaffold(
-                  backgroundColor: Color(global_style.color6),
+                  backgroundColor: Color(globals.color6),
                   appBar: PreferredSize(
                     preferredSize: Size.fromHeight(130.0),
                     child: new AppBar(

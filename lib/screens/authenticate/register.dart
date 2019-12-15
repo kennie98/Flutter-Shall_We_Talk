@@ -1,7 +1,7 @@
 import 'package:shall_we_talk/services/auth.dart';
 import 'package:shall_we_talk/shared/loading.dart';
 import 'package:flutter/material.dart';
-import 'package:shall_we_talk/shared/global_style.dart' as global_style;
+import 'package:shall_we_talk/shared/globals.dart' as globals;
 import 'package:shall_we_talk/services/location.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -25,12 +25,12 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     final bottom = MediaQuery.of(context).viewInsets.bottom;
 
-    global_style.setPortrait();
+    globals.setPortrait();
 
     return _loading
         ? Loading()
         : Scaffold(
-            backgroundColor: Color(global_style.color6),
+            backgroundColor: Color(globals.color6),
             resizeToAvoidBottomInset: false,
             resizeToAvoidBottomPadding: false,
             body: SingleChildScrollView(
@@ -72,7 +72,7 @@ class _RegisterState extends State<Register> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
-                                global_style.styledRaisedButton(
+                                globals.styledRaisedButton(
                                   'Login',
                                   () => widget.toggleView(),
                                 ),
@@ -116,7 +116,7 @@ class _State extends State<SignUpBlock> {
       child: Container(
         height: 480,
         decoration: new BoxDecoration(
-          color: Colors.amber, //(global_style.color5),
+          color: Colors.amber, //(globals.color5),
           borderRadius: new BorderRadius.only(
             topLeft: Radius.circular(20.0),
             topRight: Radius.circular(20.0),
@@ -150,7 +150,7 @@ class _State extends State<SignUpBlock> {
           children: <Widget>[
             Expanded(
               child: new TextFormField(
-                style: global_style.ts,
+                style: globals.ts,
                 decoration: const InputDecoration(
                   labelText: 'Username',
                   helperText: '',
@@ -165,7 +165,7 @@ class _State extends State<SignUpBlock> {
             SizedBox(width: 10),
             Expanded(
               child: new TextFormField(
-                style: global_style.ts,
+                style: globals.ts,
                 decoration: const InputDecoration(
                   labelText: 'Password',
                   helperText: '',
@@ -184,7 +184,7 @@ class _State extends State<SignUpBlock> {
           children: <Widget>[
             Expanded(
               child: new TextFormField(
-                style: global_style.ts,
+                style: globals.ts,
                 decoration: const InputDecoration(
                   labelText: 'Name',
                   helperText: '',
@@ -204,7 +204,7 @@ class _State extends State<SignUpBlock> {
                   SizedBox(height: 10),
                   Text(
                     "Gender",
-                    style: global_style.ts,
+                    style: globals.ts,
                   ),
                   new DropdownButton<String>(
                     items: <String>['Male', 'Female'].map((String value) {
@@ -212,13 +212,13 @@ class _State extends State<SignUpBlock> {
                         value: value,
                         child: new Text(
                           value,
-                          style: global_style.ts,
+                          style: globals.ts,
                         ),
                       );
                     }).toList(),
                     hint: Text(
                       'Choose',
-                      style: global_style.ts,
+                      style: globals.ts,
                     ), // Not necessary for Option 1
                     value: _selectedGender,
                     onChanged: (newValue) {
@@ -236,7 +236,7 @@ class _State extends State<SignUpBlock> {
           children: <Widget>[
             Expanded(
               child: new TextFormField(
-                style: global_style.ts,
+                style: globals.ts,
                 decoration: const InputDecoration(
                   labelText: 'Age',
                   helperText: '',
@@ -253,7 +253,7 @@ class _State extends State<SignUpBlock> {
             ),
             Expanded(
               child: new TextFormField(
-                style: global_style.ts,
+                style: globals.ts,
                 decoration: const InputDecoration(
                   labelText: 'Contact Number',
                   helperText: '',
@@ -275,19 +275,19 @@ class _State extends State<SignUpBlock> {
               groupValue: _professional,
               onChanged: _handleRadioValueChange,
             ),
-            Text('Professional', style: global_style.ts),
+            Text('Professional', style: globals.ts),
             SizedBox(width: 20),
             new Radio(
               value: 1,
               groupValue: _professional,
               onChanged: _handleRadioValueChange,
             ),
-            Text('Normal User', style: global_style.ts),
+            Text('Normal User', style: globals.ts),
           ],
         ),
         TextField(
           controller: selfIntroController,
-          style: global_style.ts,
+          style: globals.ts,
           keyboardType: TextInputType.multiline,
           maxLines: 2,
           decoration: const InputDecoration(
@@ -299,7 +299,7 @@ class _State extends State<SignUpBlock> {
         new SizedBox(
           height: 10.0,
         ),
-        global_style.styledRaisedButton(
+        globals.styledRaisedButton(
           'Save',
           _validateInputs,
         ),
@@ -375,7 +375,7 @@ class _State extends State<SignUpBlock> {
       _pos = await _loc.getCurrentLocation();
 
       dynamic result = await _auth.registerWithEmailAndPassword(
-          _username + '${global_style.emailDomain}',
+          _username + '${globals.emailDomain}',
           _password,
           _name,
           _selectedGender,
@@ -387,7 +387,7 @@ class _State extends State<SignUpBlock> {
           _pos.longitude);
 
       if (result == null) {
-        global_style.showMessageDialog(context, 'User account already exists');
+        globals.showMessageDialog(context, 'User account already exists');
       }
       setState(() {
         _loading = false;
