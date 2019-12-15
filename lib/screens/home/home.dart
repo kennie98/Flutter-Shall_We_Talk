@@ -8,7 +8,7 @@ import 'package:shall_we_talk/shared/loading.dart';
 import 'package:shall_we_talk/shared/globals.dart' as globals;
 import 'package:provider/provider.dart';
 import 'package:shall_we_talk/services/location.dart';
-import 'package:flutter/services.dart';
+import 'package:shall_we_talk/helper/call_no.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -18,6 +18,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   TabController _tabController;
   final AuthService _auth = AuthService();
+  CallNo callNo = new CallNo();
 
   @override
   void initState() {
@@ -35,6 +36,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     User user = Provider.of<User>(context);
     globals.setPortrait();
+    callNo.loadSavedData();
 
     return StreamBuilder<UserInfo>(
         stream: DatabaseService(uid: user.uid).userInfoOfUid,
@@ -171,7 +173,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        child: UserInfoListPro(false, true, user.uid),
+                        child: UserInfoListPro(false, true, user.uid, callNo),
                       ),
                       Container(
                         decoration: BoxDecoration(
@@ -180,7 +182,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        child: UserInfoListPro(true, true, user.uid),
+                        child: UserInfoListPro(true, true, user.uid, callNo),
                       ),
                     ],
                     controller: _tabController,
